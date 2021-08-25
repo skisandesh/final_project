@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/firebase_services/cart.dart';
+import 'package:final_year_project/screens/cart_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -16,7 +17,10 @@ class CartBadge extends StatelessWidget {
             Icons.shopping_cart,
             color: Theme.of(context).primaryColor,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (_) => const CartScreen()));
+          },
         ),
         Positioned(
             child: Stack(
