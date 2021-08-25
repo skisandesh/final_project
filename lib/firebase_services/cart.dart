@@ -34,4 +34,12 @@ class CartService extends ProductService {
   Future<void> deleteCartItem(productId) async {
     await cartRef.doc(productId).delete();
   }
+
+  Future<void> addQuantiy(productId) async {
+    await cartRef.doc(productId).update({'quantity': FieldValue.increment(1)});
+  }
+
+  Future<void> subQuantiy(productId) async {
+    await cartRef.doc(productId).update({'quantity': FieldValue.increment(-1)});
+  }
 }

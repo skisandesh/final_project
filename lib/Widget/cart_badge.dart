@@ -13,6 +13,7 @@ class CartBadge extends StatelessWidget {
     return Stack(
       children: [
         IconButton(
+          splashRadius: 0.1,
           icon: Icon(
             Icons.shopping_cart,
             color: Theme.of(context).primaryColor,

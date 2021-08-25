@@ -13,6 +13,7 @@ class CartBody extends StatefulWidget {
 }
 
 class _CartBodyState extends State<CartBody> {
+  bool isZero = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -102,13 +103,37 @@ class _CartBodyState extends State<CartBody> {
                   Row(
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () => isZero
+                            ? null
+                            : CartService().subQuantiy(data['productId']),
                         icon: Icon(Icons.remove),
                         splashRadius: 0.1,
                       ),
-                      Text('1'),
+                      StreamBuilder(
+                          stream: CartService()
+                              .cartRef
+                              .doc(data['productId'])
+                              .snapshots(),
+                          builder: (ctx, dynamic snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Text('()');
+                            } else if (snapshot.connectionState ==
+                                ConnectionState.active) {
+                              var data = snapshot.data;
+                              var quantity = data['quantity'];
+                              if (quantity == 0) {
+                                isZero = true;
+                              } else {
+                                isZero = false;
+                              }
+                              return Text(data['quantity'].toString());
+                            }
+                            return Text('0');
+                          }),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () =>
+                            CartService().addQuantiy(data['productId']),
                         icon: Icon(Icons.add),
                         splashRadius: 0.1,
                       ),
