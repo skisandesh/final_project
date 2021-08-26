@@ -1,3 +1,4 @@
+import 'package:final_year_project/screens/order_screen.dart';
 import 'package:final_year_project/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,10 @@ class TopBar extends StatelessWidget {
           const SizedBox(
             width: 15,
           ),
-          const Text('Track My Order'),
+          InkWell(
+              onTap: () => Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (_) => const OrderScreen())),
+              child: const Text('Track My Order')),
           const SizedBox(
             width: 15,
           ),

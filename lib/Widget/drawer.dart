@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/firebase_services/userinfo.dart';
 import 'package:final_year_project/screens/home_screen.dart';
 import 'package:final_year_project/screens/login_screen.dart';
+import 'package:final_year_project/screens/order_screen.dart';
 import 'package:final_year_project/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -86,6 +87,8 @@ class MyDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
+            onTap: () => Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (_) => OrderScreen())),
             leading:
                 Icon(Icons.card_travel, color: Theme.of(context).primaryColor),
             title: const Text(

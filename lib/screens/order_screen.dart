@@ -1,13 +1,13 @@
-import 'package:final_year_project/Widget/cart_body.dart';
 import 'package:final_year_project/Widget/custom_appbarr.dart';
 import 'package:final_year_project/Widget/custom_title_bar.dart';
 import 'package:final_year_project/Widget/custom_top_bar.dart';
 import 'package:final_year_project/Widget/drawer.dart';
+import 'package:final_year_project/Widget/order_body.dart';
 import 'package:final_year_project/adaptive_and_responsive/adaptive.dart';
 import 'package:flutter/material.dart';
 
-class CartScreen extends StatelessWidget {
-  const CartScreen({Key? key}) : super(key: key);
+class OrderScreen extends StatelessWidget {
+  const OrderScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class CartScreen extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.6,
               child: const MyDrawer()),
           body: (Column(
-            children: [CustomAppBar(keys: _key), CartBody()],
+            children: [CustomAppBar(keys: _key), OrderBody()],
           )),
         ),
       ),
@@ -38,7 +38,6 @@ class CartScreen extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                CartBody()
               ],
             ),
           ),
@@ -58,7 +57,7 @@ class CartScreen extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                CartBody()
+                OrderBody()
               ],
             ),
           ),
