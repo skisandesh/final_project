@@ -15,7 +15,7 @@ class CartService extends ProductService {
     if (variable.docs.isNotEmpty) {
       Fluttertoast.showToast(msg: 'Already in cart');
     } else {
-      cartRef.doc(productId).set({'productId': productId});
+      cartRef.doc(productId).set({'productId': productId, 'quantity': 1});
       Fluttertoast.showToast(msg: 'Added to Cart');
     }
   }

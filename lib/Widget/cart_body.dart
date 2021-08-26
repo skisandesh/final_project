@@ -122,7 +122,7 @@ class _CartBodyState extends State<CartBody> {
                                 ConnectionState.active) {
                               var data = snapshot.data;
                               var quantity = data['quantity'];
-                              if (quantity == 0) {
+                              if (quantity == 1) {
                                 isZero = true;
                               } else {
                                 isZero = false;
