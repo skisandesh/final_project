@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/firebase_services/userinfo.dart';
+import 'package:final_year_project/screens/cart_screen.dart';
 import 'package:final_year_project/screens/home_screen.dart';
 import 'package:final_year_project/screens/login_screen.dart';
 import 'package:final_year_project/screens/order_screen.dart';
@@ -79,6 +80,8 @@ class MyDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
+            onTap: () => Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (_) => const CartScreen())),
             leading: Icon(Icons.shopping_cart,
                 color: Theme.of(context).primaryColor),
             title: const Text(
@@ -88,7 +91,7 @@ class MyDrawer extends StatelessWidget {
           ),
           ListTile(
             onTap: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => OrderScreen())),
+                MaterialPageRoute(builder: (_) => const OrderScreen())),
             leading:
                 Icon(Icons.card_travel, color: Theme.of(context).primaryColor),
             title: const Text(
