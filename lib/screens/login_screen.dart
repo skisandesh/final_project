@@ -14,6 +14,7 @@ import '../firebase_services/authentication.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+  static const routeName = '/signin';
 
   @override
   _LoginScreenState createState() => _LoginScreenState();

@@ -13,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
+  static const routeName = '/edit';
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -76,8 +77,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   sexController.text.trim())
               .then((value) {
             Navigator.pop(context);
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => const ProfileScreen()));
+            Navigator.of(context).pushReplacementNamed(ProfileScreen.routeName);
           });
         });
       });

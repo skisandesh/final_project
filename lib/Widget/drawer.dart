@@ -58,8 +58,7 @@ class MyDrawer extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) => const HomeScreen()));
+              Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
             },
             leading: Icon(
               Icons.home,
@@ -71,8 +70,8 @@ class MyDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => const ProfileScreen())),
+            onTap: () => Navigator.of(context)
+                .pushReplacementNamed(ProfileScreen.routeName),
             leading: Icon(Icons.person, color: Theme.of(context).primaryColor),
             title: const Text(
               "Profile",
@@ -80,8 +79,8 @@ class MyDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => const CartScreen())),
+            onTap: () => Navigator.of(context)
+                .pushReplacementNamed(CartScreen.routeName),
             leading: Icon(Icons.shopping_cart,
                 color: Theme.of(context).primaryColor),
             title: const Text(
@@ -90,8 +89,8 @@ class MyDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => const OrderScreen())),
+            onTap: () => Navigator.of(context)
+                .pushReplacementNamed(OrderScreen.routeName),
             leading:
                 Icon(Icons.card_travel, color: Theme.of(context).primaryColor),
             title: const Text(
@@ -102,8 +101,8 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             onTap: () {
               FirebaseAuth.instance.signOut().then((value) =>
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (_) => const LoginScreen())));
+                  Navigator.of(context)
+                      .pushReplacementNamed(LoginScreen.routeName));
             },
             leading: Icon(Icons.logout, color: Theme.of(context).primaryColor),
             title: const Text(

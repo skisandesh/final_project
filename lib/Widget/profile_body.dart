@@ -30,10 +30,8 @@ class _ProfileBodyState extends State<ProfileBody> {
                 ),
               ),
               TextButton(
-                  onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const EditProfileScreen())),
+                  onPressed: () =>
+                      Navigator.pushNamed(context, EditProfileScreen.routeName),
                   child: Row(
                     children: const [Text('Edit'), Icon(Icons.edit)],
                   ))

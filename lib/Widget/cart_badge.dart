@@ -19,8 +19,7 @@ class CartBadge extends StatelessWidget {
             color: Theme.of(context).primaryColor,
           ),
           onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => const CartScreen()));
+            Navigator.of(context).pushNamed(CartScreen.routeName);
           },
         ),
         Positioned(

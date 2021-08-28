@@ -27,14 +27,8 @@ class LoginRegisterButton extends StatelessWidget {
           child: InkWell(
             onTap: () {
               isRegister
-                  ? Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginScreen()))
-                  : Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const RegisterScreen()));
+                  ? Navigator.pushNamed(context, LoginScreen.routeName)
+                  : Navigator.pushNamed(context, RegisterScreen.routeName);
             },
             child: Text(
               isRegister ? 'Login' : 'Register',

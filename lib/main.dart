@@ -1,3 +1,9 @@
+import 'package:final_year_project/screens/cart_screen.dart';
+import 'package:final_year_project/screens/edit_profile.dart';
+import 'package:final_year_project/screens/home_screen.dart';
+import 'package:final_year_project/screens/login_screen.dart';
+import 'package:final_year_project/screens/order_screen.dart';
+import 'package:final_year_project/screens/profile_screen.dart';
 import 'package:final_year_project/screens/register_screen.dart';
 import 'package:final_year_project/screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,7 +26,17 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         primaryColor: const Color(0xffe46b10),
       ),
-      home: const SplashScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (ctx) => SplashScreen(),
+        CartScreen.routeName: (ctx) => CartScreen(),
+        HomeScreen.routeName: (ctx) => HomeScreen(),
+        LoginScreen.routeName: (ctx) => LoginScreen(),
+        RegisterScreen.routeName: (ctx) => RegisterScreen(),
+        OrderScreen.routeName: (ctx) => OrderScreen(),
+        ProfileScreen.routeName: (ctx) => ProfileScreen(),
+        EditProfileScreen.routeName: (ctx) => EditProfileScreen(),
+      },
     );
   }
 }
