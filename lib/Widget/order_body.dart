@@ -23,8 +23,7 @@ class OrderBody extends StatelessWidget {
               builder: (ctx, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return CircularProgressIndicator();
-                } else if (snapshot.hasData &&
-                    snapshot.connectionState == ConnectionState.done) {
+                } else if (snapshot.hasData) {
                   final data = snapshot.data;
                   return getCard(data);
                 } else {

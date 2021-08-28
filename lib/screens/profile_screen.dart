@@ -24,13 +24,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             width: MediaQuery.of(context).size.width * 0.6,
             child: const MyDrawer()),
         body: SafeArea(
-          child: Column(
-            children: [
-              CustomAppBar(
-                keys: _keys,
-              ),
-              const ProfileBody()
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                CustomAppBar(
+                  keys: _keys,
+                ),
+                const ProfileBody()
+              ],
+            ),
           ),
         ),
       ),

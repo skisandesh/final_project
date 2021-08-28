@@ -1,5 +1,7 @@
 import 'package:final_year_project/screens/order_screen.dart';
 import 'package:final_year_project/screens/profile_screen.dart';
+import 'package:final_year_project/screens/splash_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class TopBar extends StatelessWidget {
@@ -38,7 +40,13 @@ class TopBar extends StatelessWidget {
           const SizedBox(
             width: 15,
           ),
-          const Text('Sign Out'),
+          InkWell(
+              onTap: () {
+                FirebaseAuth.instance.signOut().then((value) =>
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (_) => const SplashScreen())));
+              },
+              child: const Text('Sign Out')),
           const SizedBox(
             width: 15,
           ),
