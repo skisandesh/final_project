@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 class OrderService extends ProductService {
   final CollectionReference orderRef = FirebaseFirestore.instance
       .collection('orders')
-      .doc(FirebaseAuth.instance.currentUser!.email)
+      .doc(FirebaseAuth.instance.currentUser!.email.toString())
       .collection('orderItem');
 
   Future<void> addOrder(productId, productName, quantity, price) async {

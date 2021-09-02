@@ -57,7 +57,7 @@ class ProductGrid extends StatelessWidget {
           width: 100,
           child: GridTile(
             child: Image.network(
-              data['imgUrl'],
+              data['imageUrl'],
               fit: BoxFit.cover,
             ),
             footer: GridTileBar(

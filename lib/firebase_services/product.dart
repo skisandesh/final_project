@@ -5,9 +5,6 @@ class ProductService extends AuthenticationServices {
   final CollectionReference productRef =
       FirebaseFirestore.instance.collection('products');
 
-  // Future<void> getProductItem()async{
-  //   await productRef.doc()
-  // }
   Future getImage() async {
     QuerySnapshot snapshot =
         await FirebaseFirestore.instance.collection('test').get();

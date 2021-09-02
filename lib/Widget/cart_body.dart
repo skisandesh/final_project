@@ -91,7 +91,7 @@ class _CartBodyState extends State<CartBody> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CircleAvatar(
-                      backgroundImage: NetworkImage(data['imgUrl']),
+                      backgroundImage: NetworkImage(data['imageUrl']),
                       radius: Adaptive.isMobile(context) ? 20 : 40,
                     ),
                     Flexible(child: Text(data['productName'])),

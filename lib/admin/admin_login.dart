@@ -3,6 +3,7 @@ import 'package:final_year_project/Widget/custom_text_field.dart';
 import 'package:final_year_project/Widget/error_dialog.dart';
 import 'package:final_year_project/Widget/title_text.dart';
 import 'package:final_year_project/adaptive_and_responsive/adaptive.dart';
+import 'package:final_year_project/admin/admin_home.dart';
 import 'package:final_year_project/admin/upload_items.dart';
 import 'package:final_year_project/screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -135,7 +136,8 @@ class _AdminSignInPageState extends State<AdminSignInPage> {
             _adminIdTextEditingController.text = '';
             _passwordTextEditingController.text = '';
           });
-          Route route = MaterialPageRoute(builder: (c) => const UploadPage());
+          Route route =
+              MaterialPageRoute(builder: (c) => const AdminHomeScreen());
           Navigator.pushReplacement(context, route);
         }
       }

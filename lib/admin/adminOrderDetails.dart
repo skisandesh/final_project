@@ -1,57 +1,70 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:e_market/Admin/upload_items.dart';
-// import 'package:e_market/Config/config.dart';
-// import 'package:e_market/Widgets/loadingWidget.dart';
-// import 'package:e_market/Widgets/orderCard.dart';
-// import 'package:e_market/Models/address.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-// import 'package:intl/intl.dart';
-//
-// class AdminOrderDetails extends StatelessWidget {
-//
-//   @override
-//   Widget build(BuildContext context) {
-//
-//     return SafeArea(
-//     );
-//   }
-// }
-//
-// class StatusBanner extends StatelessWidget {
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//
-//     );
-//   }
-// }
-//
-// class PaymentDetailsCard extends StatelessWidget {
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//
-//     );
-//   }
-// }
-//
-// class ShippingDetails extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//     );
-//   }
-//
-// }
-//
-//
-// class KeyText extends StatelessWidget {
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Text("");
-//   }
-// }
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+
+import '../constants.dart';
+
+class AdminOrderScreen extends StatelessWidget {
+  const AdminOrderScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Order Detail'),
+      ),
+      body: Container(
+        child: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('orders').snapshots(),
+          builder: (ctx, dynamic snapshot) {
+            if (snapshot.hasError) {
+              return Text('Something went wrong');
+            }
+            if (!snapshot.hasData) {
+              return Text('Nothing ordered');
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Text("Loading");
+            }
+
+            return FittedBox(
+              fit: BoxFit.cover,
+              child: DataTable(
+                columns: [
+                  DataColumn(
+                      label: Text(
+                    'email',
+                    style: Constants.regularPrimaryText,
+                  )),
+                  DataColumn(
+                      label: Text(
+                    'product',
+                    style: Constants.regularPrimaryText,
+                  )),
+                  DataColumn(
+                      label: Text(
+                    'quantity',
+                    style: Constants.regularPrimaryText,
+                  )),
+                  DataColumn(
+                      label: Text(
+                    'Total',
+                    style: Constants.regularPrimaryText,
+                  )),
+                ],
+                rows: [
+                  DataRow(cells: [
+                    DataCell(Text(
+                        FirebaseFirestore.instance.collection('orders').)),
+                    DataCell(Text('aa')),
+                    DataCell(Text('aa')),
+                    DataCell(Text('aa')),
+                  ])
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
