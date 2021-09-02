@@ -8,14 +8,18 @@ import '../Widget/loading_dialog.dart';
 
 class AuthenticationServices {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  final CollectionReference usersRef =
+      FirebaseFirestore.instance.collection("Users");
 
   String getUserId() {
     return _firebaseAuth.currentUser!.uid;
   }
 
-  final CollectionReference usersRef =
-      FirebaseFirestore.instance.collection("Users");
+  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+
+  Future<void> signOut() async {
+    _firebaseAuth.signOut();
+  }
 
   Future<String?> signupUser(
       String email, String password, String username) async {

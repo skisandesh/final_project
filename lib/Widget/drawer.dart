@@ -7,17 +7,19 @@ import 'package:final_year_project/screens/order_screen.dart';
 import 'package:final_year_project/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({Key? key}) : super(key: key);
 
-  Widget user(String text) {
+  Widget user(String text, String imgUrl) {
     return Column(
       children: [
-        const CircleAvatar(
+        CircleAvatar(
           backgroundColor: Colors.grey,
+          backgroundImage: NetworkImage(imgUrl),
           radius: 60,
         ),
         const SizedBox(
@@ -39,20 +41,18 @@ class MyDrawer extends StatelessWidget {
             padding: const EdgeInsets.all(5),
             child: Column(
               children: [
-                FutureBuilder<DocumentSnapshot>(
-                    future: UserService().getUserInfo(),
-                    builder: (ctx, AsyncSnapshot<DocumentSnapshot> snapShot) {
-                      if (snapShot.hasError) {
-                        return user('......');
-                      } else if (snapShot.connectionState ==
-                          ConnectionState.waiting) {
-                        return user('loading');
-                      } else {
-                        Map<String, dynamic> data =
-                            snapShot.data!.data() as Map<String, dynamic>;
-                        return user(data['email'].toString());
-                      }
-                    })
+                Consumer(
+                  //     Map<String, dynamic> data =
+                  // snapShot.data!.data() as Map<String, dynamic>;
+                  //     return user(data['email'].toString());
+                  builder: (context, watch, child) {
+                    final info = watch(userProvider);
+                    return info.when(
+                        data: (value) => user(value!['email'], value['imgUrl']),
+                        loading: () => const CircularProgressIndicator(),
+                        error: (_, e) => const CircularProgressIndicator());
+                  },
+                )
               ],
             ),
           ),

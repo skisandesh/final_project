@@ -1,10 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final _firebaseAuth = FirebaseAuth.instance;
 final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
 final uId = _firebaseAuth.currentUser!.uid;
+
+final userProvider = FutureProvider((ref) async {
+  return UserService().getUserInfo();
+});
 
 class UserService {
   final CollectionReference userRef = _firebaseFirestore.collection('Users');

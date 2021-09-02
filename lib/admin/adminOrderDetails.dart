@@ -54,7 +54,7 @@ class AdminOrderScreen extends StatelessWidget {
                 rows: [
                   DataRow(cells: [
                     DataCell(Text(
-                        FirebaseFirestore.instance.collection('orders').)),
+                        FirebaseFirestore.instance.collection('orders').id)),
                     DataCell(Text('aa')),
                     DataCell(Text('aa')),
                     DataCell(Text('aa')),
