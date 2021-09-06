@@ -7,10 +7,6 @@ final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
 final uId = _firebaseAuth.currentUser!.uid;
 
-final userProvider = FutureProvider((ref) async {
-  return UserService().getUserInfo();
-});
-
 class UserService {
   final CollectionReference userRef = _firebaseFirestore.collection('Users');
 

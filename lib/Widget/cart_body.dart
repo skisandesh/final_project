@@ -1,10 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/adaptive_and_responsive/adaptive.dart';
 import 'package:final_year_project/firebase_services/cart.dart';
 import 'package:final_year_project/firebase_services/order.dart';
+import 'package:final_year_project/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants.dart';
 
@@ -26,41 +26,27 @@ class _CartBodyState extends State<CartBody> {
           'My Cart',
           style: Constants.headingPrimaryText,
         ),
-        SizedBox(
+        const SizedBox(
           height: 40,
         ),
-        FutureBuilder(
-            future: CartService().getCartItem(),
-            builder: (ctx, dynamic snapshot) {
-              if (snapshot.hasError) {
-                Container(
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.warning),
-                      ),
-                      Text('Error in loading data')
-                    ],
-                  ),
-                );
-              } else if (snapshot.connectionState == ConnectionState.waiting) {
-                return Container(
-                    child: Center(child: CircularProgressIndicator()));
-              } else if (snapshot.hasData) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.all(10),
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (ctx, index) {
-                    Map<String, dynamic> cartData =
-                        snapshot.data[index].data() as Map<String, dynamic>;
-                    return cartItem(cartData, context);
-                  },
-                );
-              }
-              return Text('Nothing on Carts');
-            })
+        Consumer(
+          builder: (context, ref, child) {
+            final cartData = ref(cartProvider);
+            return cartData.when(
+                data: (value) => ListView.builder(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(10),
+                      itemCount: value.docs.length,
+                      itemBuilder: (ctx, index) {
+                        Map<String, dynamic> data =
+                            value.docs as Map<String, dynamic>;
+                        return cartItem(data[index], context);
+                      },
+                    ),
+                loading: () => const CircularProgressIndicator(),
+                error: (_, e) => const Text('error'));
+          },
+        )
       ],
     );
   }
@@ -118,7 +104,7 @@ class _CartBodyState extends State<CartBody> {
                           onPressed: () => isZero
                               ? null
                               : CartService().subQuantiy(data['productId']),
-                          icon: Icon(Icons.remove),
+                          icon: const Icon(Icons.remove),
                           splashRadius: 0.1,
                         ),
                         StreamBuilder(
@@ -155,7 +141,7 @@ class _CartBodyState extends State<CartBody> {
                 ),
               )),
         ),
-        SizedBox(
+        const SizedBox(
           width: 25,
         ),
         Expanded(
@@ -165,8 +151,8 @@ class _CartBodyState extends State<CartBody> {
               OrderService().addOrder(data['productId'], data['productName'],
                   quantity, data['price']);
               CartService().deleteCartItem(data['productId'].toString());
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text('added to order')));
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('added to order')));
               setState(() {});
             },
             child: Text(

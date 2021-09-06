@@ -20,15 +20,15 @@ class CartService extends ProductService {
     }
   }
 
-  getCartItem() async {
+  Future<QuerySnapshot> getCartItem() async {
     List productId = [];
     final cartItem = await cartRef.get();
-    cartItem.docs.forEach((element) {
+    for (var element in cartItem.docs) {
       productId.add(element['productId'].toString());
-    });
-    final snapshot =
+    }
+    QuerySnapshot snapshot =
         await productRef.where('productId', whereIn: productId).get();
-    return snapshot.docs;
+    return snapshot;
   }
 
   Future<void> deleteCartItem(productId) async {

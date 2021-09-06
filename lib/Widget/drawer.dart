@@ -1,5 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:final_year_project/firebase_services/userinfo.dart';
+import 'package:final_year_project/providers/user_info_provider.dart';
 import 'package:final_year_project/screens/cart_screen.dart';
 import 'package:final_year_project/screens/home_screen.dart';
 import 'package:final_year_project/screens/login_screen.dart';
@@ -42,9 +41,6 @@ class MyDrawer extends StatelessWidget {
             child: Column(
               children: [
                 Consumer(
-                  //     Map<String, dynamic> data =
-                  // snapShot.data!.data() as Map<String, dynamic>;
-                  //     return user(data['email'].toString());
                   builder: (context, watch, child) {
                     final info = watch(userProvider);
                     return info.when(

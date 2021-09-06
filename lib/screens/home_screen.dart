@@ -1,5 +1,4 @@
 import 'package:final_year_project/Widget/carousel.dart';
-import 'package:final_year_project/Widget/category.dart';
 import 'package:final_year_project/Widget/custom_appbarr.dart';
 import 'package:final_year_project/Widget/custom_body.dart';
 import 'package:final_year_project/Widget/custom_text_field.dart';
@@ -23,37 +22,72 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final _searchController = TextEditingController();
     return Adaptive(
-      mobile: Scaffold(
-          key: _key,
-          drawer: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.6,
-              child: const MyDrawer()),
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  CustomAppBar(
-                    keys: _key,
-                  ),
-                  CustomTextField(
-                      key: const ValueKey('search'),
-                      controller: _searchController,
-                      data: Icons.search,
-                      hintText: 'search'),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Carousel(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Categories(),
-                  const ProductGrid(),
-                  // ProductItem(),
-                ],
-              ),
-            ),
-          )),
+      mobile: DefaultTabController(
+        initialIndex: 2,
+        length: 3,
+        child: SafeArea(
+          child: Scaffold(
+            key: _key,
+            drawer: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.6,
+                child: const MyDrawer()),
+            body: NestedScrollView(
+                // physics: NeverScrollableScrollPhysics(),
+                headerSliverBuilder: (context, isScolled) {
+                  return [
+                    SliverAppBar(
+                      floating: true,
+                      backgroundColor: Colors.white,
+                      flexibleSpace: CustomAppBar(
+                        keys: _key,
+                      ),
+                    ),
+                    SliverAppBar(
+                      backgroundColor: Colors.white,
+                      collapsedHeight: 320,
+                      expandedHeight: 320,
+                      flexibleSpace: Column(
+                        children: [
+                          CustomTextField(
+                              key: const ValueKey('search'),
+                              controller: _searchController,
+                              data: Icons.search,
+                              hintText: 'search'),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Carousel(),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SliverPersistentHeader(
+                        pinned: true,
+                        delegate: MyDelegate(const TabBar(
+                          indicatorColor: Colors.blue,
+                          unselectedLabelColor: Colors.grey,
+                          labelColor: Colors.black,
+                          tabs: [
+                            Tab(
+                              text: 'Categories',
+                            ),
+                            Tab(
+                              text: 'Brand',
+                            ),
+                            Tab(
+                              text: 'Shop',
+                            )
+                          ],
+                        )))
+                  ];
+                },
+                body: const TabBarView(
+                    children: [ProductGrid(), ProductGrid(), ProductGrid()])),
+          ),
+        ),
+      ),
       tablet: Container(
         color: Colors.grey,
         child: Scaffold(
@@ -96,5 +130,30 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+}
+
+class MyDelegate extends SliverPersistentHeaderDelegate {
+  MyDelegate(this.tabBar);
+  final TabBar tabBar;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: Colors.white,
+      child: tabBar,
+    );
+  }
+
+  @override
+  double get maxExtent => tabBar.preferredSize.height;
+
+  @override
+  double get minExtent => tabBar.preferredSize.height;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
   }
 }
