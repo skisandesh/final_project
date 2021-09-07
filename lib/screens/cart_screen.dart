@@ -20,7 +20,7 @@ class CartScreen extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.6,
               child: const MyDrawer()),
           body: (Column(
-            children: [CustomAppBar(keys: _key), CartBody()],
+            children: [CustomAppBar(keys: _key), const CartBody()],
           )),
         ),
       ),

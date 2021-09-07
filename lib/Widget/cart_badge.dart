@@ -11,51 +11,54 @@ class CartBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: [
-        IconButton(
-          splashRadius: 0.1,
-          icon: Icon(
+      children: <Widget>[
+        InkWell(
+          onTap: () => Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (_) => const CartScreen())),
+          child: const Icon(
             Icons.shopping_cart,
-            color: Theme.of(context).primaryColor,
           ),
-          onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => const CartScreen()));
-          },
         ),
         Positioned(
-            child: Stack(
-          children: [
-            const Icon(
-              Icons.brightness_1,
-              size: 20.0,
-              color: Colors.black,
+          right: 0.0,
+          child: Container(
+            padding: const EdgeInsets.all(1),
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              borderRadius: BorderRadius.circular(6),
             ),
-            StreamBuilder<QuerySnapshot>(
-                stream: CartService().cartRef.snapshots(),
-                builder: (ctx, snapshot) {
-                  if (snapshot.hasError) {
-                    return cartCount('-');
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return cartCount('-');
-                  }
-                  return cartCount(snapshot.data!.docs.length.toString());
-                }),
-          ],
-        ))
+            constraints: const BoxConstraints(
+              minWidth: 13,
+              minHeight: 13,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 1),
+              child: StreamBuilder<QuerySnapshot>(
+                  stream: CartService().cartRef.snapshots(),
+                  builder: (ctx, snapshot) {
+                    if (snapshot.hasError) {
+                      return count('-');
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return count('-');
+                    }
+                    return count(snapshot.data!.docs.length.toString());
+                  }),
+            ),
+          ),
+        ),
       ],
     );
   }
 }
 
-Widget cartCount(value) {
-  return Positioned(
-      top: 4.0,
-      bottom: 4.0,
-      left: 6.0,
-      child: Text(
-        value,
-        style: TextStyle(fontSize: 10, color: Colors.white),
-      ));
+Widget count(value) {
+  return Text(
+    '${value}',
+    style: TextStyle(
+      color: Colors.white,
+      fontSize: 8,
+    ),
+    textAlign: TextAlign.center,
+  );
 }

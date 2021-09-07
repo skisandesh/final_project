@@ -170,7 +170,7 @@ class _UploadPageState extends State<UploadPage>
       ),
       body: ListView(
         children: [
-          _isUploading ? const CircularProgressIndicator() : const Text(''),
+          _isUploading ? const LinearProgressIndicator() : const Text(''),
           SizedBox(
             height: 230.0,
             width: MediaQuery.of(context).size.width * 0.8,

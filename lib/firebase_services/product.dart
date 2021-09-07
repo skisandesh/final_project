@@ -8,9 +8,9 @@ class ProductService extends AuthenticationServices {
   // Future<void> getProductItem()async{
   //   await productRef.doc()
   // }
-  Future getImage() async {
-    QuerySnapshot snapshot =
-        await FirebaseFirestore.instance.collection('test').get();
+
+  Future getCarouselImage() async {
+    QuerySnapshot snapshot = await productRef.limit(5).get();
     return snapshot.docs;
   }
 

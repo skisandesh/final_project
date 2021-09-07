@@ -9,29 +9,17 @@ class CustomAppBar extends StatelessWidget {
   GlobalKey<ScaffoldState> keys;
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: MediaQuery.of(context).size.width < 255
-            ? null
-            : const EdgeInsets.all(15),
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-          colors: [Colors.white, Colors.white.withOpacity(0)],
-          begin: const Alignment(0, 0),
-          end: const Alignment(0, 1),
-        )),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-                onPressed: () {
-                  keys.currentState!.openDrawer();
-                },
-                icon: const Icon(
-                  Icons.menu,
-                )),
-            const TitleText(),
-            const CartBadge(),
-          ],
-        ));
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      IconButton(
+          onPressed: () {
+            keys.currentState!.openDrawer();
+          },
+          icon: const Icon(
+            Icons.menu,
+            color: Colors.black,
+          )),
+      const TitleText(),
+      const CartBadge(),
+    ]);
   }
 }

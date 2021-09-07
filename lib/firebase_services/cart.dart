@@ -23,9 +23,9 @@ class CartService extends ProductService {
   getCartItem() async {
     List productId = [];
     final cartItem = await cartRef.get();
-    cartItem.docs.forEach((element) {
+    for (var element in cartItem.docs) {
       productId.add(element['productId'].toString());
-    });
+    }
     final snapshot =
         await productRef.where('productId', whereIn: productId).get();
     return snapshot.docs;

@@ -22,7 +22,7 @@ class OrderBody extends StatelessWidget {
               future: OrderService().getOrderItem(),
               builder: (ctx, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return LinearProgressIndicator();
                 } else if (snapshot.hasData) {
                   final data = snapshot.data;
                   return getCard(data);

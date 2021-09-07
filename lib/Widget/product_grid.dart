@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/adaptive_and_responsive/adaptive.dart';
 import 'package:final_year_project/firebase_services/cart.dart';
 import 'package:final_year_project/firebase_services/product.dart';
+import 'package:final_year_project/screens/product_detail.dart';
 import 'package:flutter/material.dart';
 
 import '../color_filter.dart';
@@ -16,7 +17,7 @@ class ProductGrid extends StatelessWidget {
         future: ProductService().getProduct(),
         builder: (ctx, dynamic snapshot) {
           if (snapshot.hasError) {
-            return Text("Something went wrong");
+            return const Text("Something went wrong");
           }
 
           if (snapshot.connectionState == ConnectionState.done) {
@@ -42,42 +43,50 @@ class ProductGrid extends StatelessWidget {
           }
 
           return const Center(
-            child: CircularProgressIndicator(),
+            child: LinearProgressIndicator(),
           );
         });
   }
 
   Widget productCard(data, context) {
-    return Card(
-        elevation: 10,
-        clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: Container(
-          height: 100,
-          width: 100,
-          child: GridTile(
-            child: Image.network(
-              data['imgUrl'],
-              fit: BoxFit.cover,
-            ),
-            footer: GridTileBar(
-              backgroundColor: Colors.black87,
-              title: Text(
-                data['productName'],
-                style: Constants.boldHeadingWhite,
-              ),
-              trailing: IconButton(
-                icon: Icon(
-                  Icons.shopping_cart,
-                  color: Theme.of(context).primaryColor,
+    return GridTile(
+        child: InkWell(
+      onTap: () => Navigator.of(context)
+          .push(MaterialPageRoute(builder: (_) => ProductDetailScreen(data))),
+      child: Card(
+          color: Colors.white,
+          elevation: 5,
+          clipBehavior: Clip.antiAlias,
+          // shape:
+          //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                Image.network(
+                  data['imageUrl'],
+                  width: 180,
+                  height: 120,
+                  fit: BoxFit.cover,
                 ),
-                onPressed: () {
-                  CartService()
-                      .addToCart(data['productId'], data['productName'], '1');
-                },
-              ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      data['productName'],
+                      style: Constants.regularDarkText,
+                    ),
+                    IconButton(
+                        onPressed: () => CartService().addToCart(
+                            data['productId'], data['productName'], 1),
+                        icon: Icon(
+                          Icons.shopping_cart,
+                          color: Theme.of(context).primaryColor,
+                        ))
+                  ],
+                )
+              ],
             ),
-          ),
-        ));
+          )),
+    ));
   }
 }

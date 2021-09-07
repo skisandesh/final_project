@@ -13,18 +13,24 @@ import '../constants.dart';
 class MyDrawer extends StatelessWidget {
   const MyDrawer({Key? key}) : super(key: key);
 
-  Widget user(String text) {
-    return Column(
-      children: [
-        const CircleAvatar(
-          backgroundColor: Colors.grey,
-          radius: 60,
-        ),
-        const SizedBox(
-          height: 40,
-        ),
-        Align(alignment: Alignment.bottomRight, child: Text(text)),
-      ],
+  Widget user(String text, image) {
+    return Container(
+      color: Colors.grey[100],
+      padding: const EdgeInsets.all(15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CircleAvatar(
+            backgroundColor: Colors.grey,
+            backgroundImage: NetworkImage(image),
+            radius: 35,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(text),
+        ],
+      ),
     );
   }
 
@@ -33,82 +39,77 @@ class MyDrawer extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-          Container(
-            height: 200,
-            color: Colors.blue,
-            padding: const EdgeInsets.all(5),
-            child: Column(
-              children: [
-                FutureBuilder<DocumentSnapshot>(
-                    future: UserService().getUserInfo(),
-                    builder: (ctx, AsyncSnapshot<DocumentSnapshot> snapShot) {
-                      if (snapShot.hasError) {
-                        return user('......');
-                      } else if (snapShot.connectionState ==
-                          ConnectionState.waiting) {
-                        return user('loading');
-                      } else {
-                        Map<String, dynamic> data =
-                            snapShot.data!.data() as Map<String, dynamic>;
-                        return user(data['email'].toString());
-                      }
-                    })
-              ],
-            ),
-          ),
+          FutureBuilder<DocumentSnapshot>(
+              future: UserService().getUserInfo(),
+              builder: (ctx, AsyncSnapshot<DocumentSnapshot> snapShot) {
+                if (snapShot.hasError) {
+                  return const LinearProgressIndicator();
+                } else if (snapShot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const LinearProgressIndicator();
+                } else {
+                  Map<String, dynamic> data =
+                      snapShot.data!.data() as Map<String, dynamic>;
+                  return user(data['email'].toString(), data['imgUrl']);
+                }
+              }),
+          const Divider(),
           ListTile(
             onTap: () {
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (_) => const HomeScreen()));
             },
-            leading: Icon(
+            minLeadingWidth: 1,
+            leading: const Icon(
               Icons.home,
-              color: Theme.of(context).primaryColor,
+              color: Colors.black,
             ),
             title: const Text(
               "Home",
-              style: Constants.regularPrimaryText,
+              style: Constants.regularDarkText,
             ),
           ),
           ListTile(
+            minLeadingWidth: 1,
             onTap: () => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (_) => const ProfileScreen())),
-            leading: Icon(Icons.person, color: Theme.of(context).primaryColor),
+            leading: const Icon(Icons.person, color: Colors.black),
             title: const Text(
               "Profile",
-              style: Constants.regularPrimaryText,
+              style: Constants.regularDarkText,
             ),
           ),
           ListTile(
+            minLeadingWidth: 1,
             onTap: () => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (_) => const CartScreen())),
-            leading: Icon(Icons.shopping_cart,
-                color: Theme.of(context).primaryColor),
+            leading: const Icon(Icons.shopping_cart, color: Colors.black),
             title: const Text(
               "Cart",
-              style: Constants.regularPrimaryText,
+              style: Constants.regularDarkText,
             ),
           ),
           ListTile(
+            minLeadingWidth: 1,
             onTap: () => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (_) => const OrderScreen())),
-            leading:
-                Icon(Icons.card_travel, color: Theme.of(context).primaryColor),
+            leading: const Icon(Icons.card_travel, color: Colors.black),
             title: const Text(
               "Order",
-              style: Constants.regularPrimaryText,
+              style: Constants.regularDarkText,
             ),
           ),
           ListTile(
+            minLeadingWidth: 1,
             onTap: () {
               FirebaseAuth.instance.signOut().then((value) =>
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (_) => const LoginScreen())));
             },
-            leading: Icon(Icons.logout, color: Theme.of(context).primaryColor),
+            leading: const Icon(Icons.logout, color: Colors.black),
             title: const Text(
               "Logout",
-              style: Constants.regularPrimaryText,
+              style: Constants.regularDarkText,
             ),
           ),
         ],

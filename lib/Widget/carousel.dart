@@ -18,11 +18,11 @@ class _CarouselState extends State<Carousel> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: ProductService().getImage(),
+        future: ProductService().getCarouselImage(),
         builder: (ctx, dynamic snapShot) {
           return snapShot.data == null
               ? const Center(
-                  child: CircularProgressIndicator(),
+                  child: LinearProgressIndicator(),
                 )
               : CarouselSlider.builder(
                   itemCount: snapShot.data.length,
@@ -33,30 +33,20 @@ class _CarouselState extends State<Carousel> {
                     return Stack(
                       children: [
                         SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: getImage!.isNotEmpty
-                              ? Image.network(
-                                  getImage['imgUrl'],
-                                  fit: BoxFit.fill,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Container(
-                                        color: Colors.amber,
-                                        alignment: Alignment.center,
-                                        child: const Text(
-                                          'Whoops!',
-                                          style: TextStyle(fontSize: 30),
-                                        ));
-                                  },
-                                  filterQuality: FilterQuality.high,
-                                )
-                              : Image.asset('assets/images/welcome.png'),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.all(20),
-                          child: Align(
-                            alignment: Alignment.bottomLeft,
+                            width: MediaQuery.of(context).size.width,
+                            child: Image.network(
+                              getImage!['imageUrl'],
+                              fit: BoxFit.cover,
+                              filterQuality: FilterQuality.high,
+                            )),
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Container(
+                            margin: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
+                            color: Colors.black54,
                             child: Text(
-                              '${getImage['title']}',
+                              '${getImage['productName']}',
                               style: Constants.boldHeadingWhite,
                             ),
                           ),
